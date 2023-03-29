@@ -68,7 +68,7 @@ def negative_marker_purity_cells(adata_sp: AnnData, adata_sc: AnnData, key: str=
     
     
     # Get ratio of positive cells per cell type
-    pos_exp_sc = pd.DataFrame(adata_sc.layers['raw'] > 0,columns=adata_sp.var_names)        #wieso hier nur TRUE False, unten echter mean
+    pos_exp_sc = pd.DataFrame(adata_sc.layers['raw'] > 0,columns=adata_sp.var_names)      #wieso hier nur TRUE False, unten echter mean
     pos_exp_sp = pd.DataFrame(adata_sp.layers['raw'] > 0,columns=adata_sp.var_names)
     pos_exp_sc['celltype'] = list(adata_sc.obs[key])
     pos_exp_sp['celltype'] = list(adata_sp.obs[key])
