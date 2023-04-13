@@ -5,12 +5,10 @@ from anndata import AnnData
 import networkx as nx
 import anndata as ad
 import matplotlib.pyplot as plt
-from tifffile import imread
 from scipy.ndimage import gaussian_filter
 from scipy.sparse import isspmatrix
 from scipy import stats
 import itertools
-import seaborn as sns
 from typing import Tuple
 from typing import List
 
