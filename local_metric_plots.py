@@ -14,6 +14,7 @@ from local_metric_functions import get_major_celltype_perc
 from local_metric_functions import get_summed_cell_area
 from local_metric_functions import get_avg_knn_mixing
 from local_metric_functions import get_correlation_matrices
+import seaborn as sns
 
 
 def plot_spots(adata_sp: AnnData, x_min: int, x_max: int, y_min: int, y_max: int, image: np.ndarray, show_ticks: bool = False):
@@ -314,6 +315,29 @@ def plot_avg_knn_mixing(adata_sp: AnnData, x_min: int, x_max: int, y_min: int, y
     title = "average knn mixing"
     vmin, vmax = [0,1]
     matrix_colorbar_plot(matrix, title, x_min, x_max, y_min, y_max, vmin, vmax, smooth, show_ticks)
+
+
+def plot_correlation_matrices_and_pairplot(adata_sp,x_min,x_max,y_min,y_max,image,bins,celltype):
+    pearson_corr_matrix, spearman_corr_matrix, measurements_df = get_correlation_matrices(adata_sp,x_min,x_max,y_min,y_max,image,bins,celltype)
+    fig, (ax1, ax2) = plt.subplots(1,2)
+    ax1.set_title("measurements pearson-corrlations", fontsize = 10)
+    ax2.set_title("measurements spearman-corrlations", fontsize = 10)
+    plot1 = ax1.imshow(pearson_corr_matrix)
+    plot2 = ax2.imshow(spearman_corr_matrix)
+
+    labels = ["wrong spot ratio","spot density","cell density", "celltype density",
+            "number of celltypes","major celltype perc","summed cell area", "avg knn mixing"]
+    for ax in [ax1,ax2]:
+        ax.set_xticks([0,1,2,3,4,5,6,7],labels)
+        ax.set_yticks([0,1,2,3,4,5,6,7],labels)
+        ax.set_xticklabels(labels, rotation=90)
+        
+    fig.colorbar(plot1,fraction=0.046, pad=0.04)    
+    fig.colorbar(plot2,fraction=0.046, pad=0.04)    
+
+    plt.subplots_adjust(wspace=1.5)        
+
+    sns.pairplot(measurements_df)
 
 
    

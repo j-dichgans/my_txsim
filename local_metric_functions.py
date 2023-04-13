@@ -577,7 +577,7 @@ def get_correlation_matrices(adata_sp: AnnData, x_min: int, x_max: int, y_min: i
     
     Returns
     -------
-        pearson and spearman correlation matrices
+        pearson and spearman correlation matrices, df with measurements
     """
 
     M_wrong_spot_ratio = get_wrong_spot_ratio(adata_sp,x_min, x_max, y_min, y_max,image,bins)[0]
@@ -601,7 +601,7 @@ def get_correlation_matrices(adata_sp: AnnData, x_min: int, x_max: int, y_min: i
             spearman_corr_matrix[i,j] = stats.spearmanr(measurements_df.iloc[:,i],measurements_df.iloc[:,j]).statistic
             pearson_corr_matrix[i,j] = stats.pearsonr(measurements_df.iloc[:,i],measurements_df.iloc[:,j]).statistic
     
-    return pearson_corr_matrix, spearman_corr_matrix
+    return pearson_corr_matrix, spearman_corr_matrix, measurements_df
 
 
 
